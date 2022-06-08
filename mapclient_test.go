@@ -10,6 +10,26 @@ import (
 
 var MAPEndpoint = "http://18.142.54.137:7445"
 
+func TestClient_MAPBlockByNumber(t *testing.T) {
+	cli, err := Dial(MAPEndpoint)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	header, err := cli.MAPBlockByNumber(context.Background(), big.NewInt(15960))
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+	fmt.Printf("block: %+v\n", header)
+
+	h, err := json.Marshal(header)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	fmt.Println("block: ", string(h))
+}
+
 func TestClient_MAPHeaderByNumber(t *testing.T) {
 	cli, err := Dial(MAPEndpoint)
 	if err != nil {
